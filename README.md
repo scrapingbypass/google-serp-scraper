@@ -56,3 +56,43 @@ for page in range(1, 6):  # Scrape the first 5 pages of results
 # Close the WebDriver
 driver.quit()
 ```
+
+Or
+```
+import requests
+from bs4 import BeautifulSoup
+
+# Search keywords
+search_term = "scrapingbypass"
+
+# Request headers
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"}
+
+# Search pages of results
+num_pages = 5
+no=1
+
+for page in range(0,num_pages):
+    # Request URL
+    if page == 0:
+        url = f"https://www.google.com/search?q={search_term}"
+    else:
+        url = f"https://www.google.com/search?q={search_term}&start={page*10}"
+
+    # Request
+    response = requests.get(url, headers=headers)
+
+    # Parse HTML
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    # Extract search reult
+    search_results = soup.select(".yuRUbf")
+
+    # Print title and link
+    for result in search_results:
+        title = result.select_one("h3").text
+        link = result.select_one("a")["href"]
+        print(f"{no}: {title}: {link}")
+        no=no+1
+```
