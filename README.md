@@ -21,7 +21,7 @@ driver.get(url)
 
 # Search for keyword
 search_box = driver.find_element(By.NAME, 'q')
-search_term = 'zenrows'
+search_term = 'scrapingbypass'
 search_box.send_keys(search_term)
 search_box.send_keys(Keys.RETURN)
 
